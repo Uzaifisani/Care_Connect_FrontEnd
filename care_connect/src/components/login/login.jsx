@@ -1,8 +1,9 @@
 import { Box, Button, Card, FormLabel, Heading, Input, Stack, Text,useToast } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect,useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "../../apis";
+import { useAuth } from "../../store/authStore";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,14 @@ export default function LoginPage() {
   });
   const [errors, setErrors] = useState({});
   const toast= useToast();
+  const navigate = useNavigate();
+  const { isAuthenticated, login } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
+  }, [isAuthenticated, navigate]);
 
   const LoginMutation= useMutation({
     mutationFn:(FormData)=>loginApi(FormData),
@@ -23,8 +32,8 @@ export default function LoginPage() {
         duration: 3000,
         isClosable: true,
       });
-      localStorage.setItem("accessToken",response.data.accessToken);
-      //navigate("/dashboard");
+      login(response.data.accessToken);
+      navigate("/dashboard");
     },
     onError:(error)=>{
       toast({
