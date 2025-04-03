@@ -33,7 +33,7 @@ function App() {
       <Route path='/' element={<LoginPage />} />
       <Route path='/register' element={<SignupPage />} />
       <Route
-        path='/dashboard'
+        path='/dashboard/*'
         element={
           <ProtectedRoute>
             <DashboardRouter/>

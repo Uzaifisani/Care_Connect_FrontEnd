@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { loginApi } from "../../apis";
 import { useAuth } from "../../store/authStore";
+import setUserDataInStorage from "../../hooks/userDataSet";
 
 export default function LoginPage() {
   const [formData, setFormData] = useState({
