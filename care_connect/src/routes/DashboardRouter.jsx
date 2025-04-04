@@ -9,6 +9,7 @@ import ListAllStaff from "../components/AdminDashboard/ListAllStaff";
 import VerifyUsers from "../components/AdminDashboard/VerifyUsers";
 import Feedback from "../components/AdminDashboard/Feedback";
 import EditUserPage from "../components/AdminDashboard/EditUser";
+import Appointments from "../components/DoctorDashboard/Appointments";
 
 export default function DashboardRouter() {
   const { userType } = useAuth();
@@ -19,9 +20,9 @@ export default function DashboardRouter() {
     switch(userType) {
       case 'Admin':
         return <AdminDashboard />;
-      case 'Staff':
+      case 'staff':
         return <StaffDashboard />;
-      case 'Doctor':
+      case 'doctor':
         return <DoctorDashboard />;
       case 'Patient':
         return <PatientDashboard />;
@@ -48,9 +49,10 @@ export default function DashboardRouter() {
 )}
       
       {/* Doctor Routes */}
-      {userType === 'Doctor' && (
+      {userType === 'doctor' && (
         <>
           <Route path="/" element={<DoctorDashboard />} />
+          <Route path="doctor/appointments" element={<Appointments />} />
           {/* Add doctor specific routes */}
         </>
       )}
@@ -64,7 +66,7 @@ export default function DashboardRouter() {
       )}
       
       {/* Staff Routes */}
-      {userType === 'Staff' && (
+      {userType === 'staff' && (
         <>
           <Route path="/" element={<StaffDashboard />} />
           {/* Add staff specific routes */}

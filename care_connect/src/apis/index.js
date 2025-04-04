@@ -132,3 +132,34 @@ export const RejectUser= async(uid)=>{
     );
     return response;
 }
+
+
+//Doctor Api
+export const AppointmentsAPI= async(docid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/doctor/appointments`,{
+            docid:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        },
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const DoctorsFeedback=async(docid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/doctor/appointments`,
+        docid,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
