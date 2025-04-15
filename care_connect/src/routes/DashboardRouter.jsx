@@ -10,6 +10,12 @@ import VerifyUsers from "../components/AdminDashboard/VerifyUsers";
 import Feedback from "../components/AdminDashboard/Feedback";
 import EditUserPage from "../components/AdminDashboard/EditUser";
 import Appointments from "../components/DoctorDashboard/Appointments";
+import DFeedback from "../components/DoctorDashboard/DFeedback";
+import BookAppointmentPage from "../components/PatientDashboard/BookAppointment";
+import MyAppointmentsPage from "../components/PatientDashboard/MyAppoinments";
+import GiveFeedbackPage from "../components/PatientDashboard/GiveFeedback";
+import UploadPrescriptions from "../components/DoctorDashboard/UploadPrescriptions";
+import ViewPrescriptions from "../components/DoctorDashboard/ViewPrescriptions";
 
 export default function DashboardRouter() {
   const { userType } = useAuth();
@@ -20,9 +26,9 @@ export default function DashboardRouter() {
     switch(userType) {
       case 'Admin':
         return <AdminDashboard />;
-      case 'staff':
+      case 'Staff':
         return <StaffDashboard />;
-      case 'doctor':
+      case 'Doctor':
         return <DoctorDashboard />;
       case 'Patient':
         return <PatientDashboard />;
@@ -49,11 +55,13 @@ export default function DashboardRouter() {
 )}
       
       {/* Doctor Routes */}
-      {userType === 'doctor' && (
+      {userType === 'Doctor' && (
         <>
           <Route path="/" element={<DoctorDashboard />} />
           <Route path="doctor/appointments" element={<Appointments />} />
-          {/* Add doctor specific routes */}
+          <Route path="doctor/feedbacks" element={<DFeedback />} />
+          <Route path="doctor/upload-prescription" element={<UploadPrescriptions />} />
+          <Route path="doctor/view-prescriptions" element={<ViewPrescriptions />} />
         </>
       )}
       
@@ -61,12 +69,14 @@ export default function DashboardRouter() {
       {userType === 'Patient' && (
         <>
           <Route path="/" element={<PatientDashboard />} />
-          {/* Add patient specific routes */}
+          <Route path="patient/book-appointment" element={<BookAppointmentPage />} />
+    <Route path="patient/my-appointments" element={<MyAppointmentsPage />} />
+    <Route path="patient/feedback" element={<GiveFeedbackPage />} />
         </>
       )}
       
       {/* Staff Routes */}
-      {userType === 'staff' && (
+      {userType === 'Staff' && (
         <>
           <Route path="/" element={<StaffDashboard />} />
           {/* Add staff specific routes */}

@@ -138,9 +138,7 @@ export const RejectUser= async(uid)=>{
 export const AppointmentsAPI= async(docid)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
-        `${API_URl}/api/doctor/appointments`,{
-            docid:"8G6LFJjkEclTHgI4JDZY_" //chnge this
-        },
+        `${API_URl}/api/doctor/appointments`,docid,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -153,8 +151,10 @@ export const AppointmentsAPI= async(docid)=>{
 export const DoctorsFeedback=async(docid)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
-        `${API_URl}/api/doctor/appointments`,
-        docid,
+        `${API_URl}/api/doctor/appointments/feedbacks`,
+        {
+            docid//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        },
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -163,3 +163,103 @@ export const DoctorsFeedback=async(docid)=>{
     );
     return response;
 }
+
+export const DoctorsUploadPresc=async(PrescData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/doctor/prescription/upload`,
+            PrescData,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const DoctorsViewPresc=async(docid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/doctor/prescriptions`,
+            docid//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        ,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const DoctorsStats=async(uid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/doctor/getstats`,{uid},
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+// Patient APIS
+export const BookAppointment=async(FormData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/appointment/book`,
+        FormData,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const MyAppointments=async(patid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/patient/appointments`,
+        patid,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const CancelAppointments=async(aptid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/appointment/cancel `,
+        aptid,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const WriteFeedbacks=async(FormData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/patient/appointments/feedbacks/write`,
+        FormData,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+

@@ -9,8 +9,8 @@ import logo from "../../assets/logo.png";
 
 const schema = yup.object().shape({
   userType: yup.string().required("User type is required"),
-  firstName: yup.string().required("First name is required"),
-  lastName: yup.string().required("Last name is required"),
+  fname: yup.string().required("First name is required"),
+  lname: yup.string().required("Last name is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
   department: yup.string().when("userType", {
@@ -48,10 +48,10 @@ export default function SignupPage() {
         duration: 3000,
         isClosable: true,
       });
-      reset();
       navigate("/");
     },
     onError: (error) => {
+      console.log(error)
       toast({
         title: "Signup Failed",
         description: error.response?.data?.message || "Something went wrong",
@@ -65,6 +65,7 @@ export default function SignupPage() {
   const onSubmit = async (data) => {
     try {
       signupMutation.mutate(data);
+      console.log(data);
     } catch (error) {
       console.error("Signup failed:", error);
     }
@@ -84,30 +85,30 @@ export default function SignupPage() {
                 placeholder="User Type" 
                 {...register("userType")}
               >
-                <option value="patient">Patient</option>
-                <option value="staff">Staff</option>
-                <option value="doctor">Doctor</option>
+                <option value="Patient">Patient</option>
+                <option value="Staff">Staff</option>
+                <option value="Doctor">Doctor</option>
               </Select>
               <FormErrorMessage>{errors.userType?.message}</FormErrorMessage>
             </FormControl>
 
             <Stack direction="row">
-              <FormControl isInvalid={errors.firstName}>
+              <FormControl isInvalid={errors.fname}>
                 <Input 
                   placeholder="First Name *" 
                   variant="filled" 
-                  {...register("firstName")}
+                  {...register("fname")}
                 />
-                <FormErrorMessage>{errors.firstName?.message}</FormErrorMessage>
+                <FormErrorMessage>{errors.fname?.message}</FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.lastName}>
+              <FormControl isInvalid={errors.lname}>
                 <Input 
                   placeholder="Last Name *" 
                   variant="filled" 
-                  {...register("lastName")}
+                  {...register("lname")}
                 />
-                <FormErrorMessage>{errors.lastName?.message}</FormErrorMessage>
+                <FormErrorMessage>{errors.lname?.message}</FormErrorMessage>
               </FormControl>
             </Stack>
 

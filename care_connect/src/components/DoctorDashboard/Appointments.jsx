@@ -45,7 +45,10 @@ const Appointments = () => {
     queryKey: ['doctorAppointments', user?.uid],
     queryFn: async () => {
       if (!user?.uid) throw new Error('User ID not found');
-      const response = await AppointmentsAPI({ uid: user.uid });
+      const response = await AppointmentsAPI({ docid: user.uid });
+      if (response.error) {
+        throw new Error(response.errorMsg || 'No appointments found');
+      }
       return response.data;
     },
     enabled: !!user?.uid
@@ -97,9 +100,16 @@ const Appointments = () => {
       <Text fontSize="xl" fontWeight="bold" color="gray.500">
         No appointments found
       </Text>
-      <Text color="gray.400" mt={2}>
+      <Text color="gray.400" mt={2} mb={4}>
         There are no appointments that match your filter criteria
       </Text>
+      <Button 
+        colorScheme="teal" 
+        leftIcon={<FiArrowLeft />}
+        onClick={() => navigate('/dashboard')}
+      >
+        Back to Dashboard
+      </Button>
     </Center>
   );
 
@@ -114,13 +124,17 @@ const Appointments = () => {
   if (isError) {
     return (
       <Flex justify="center" align="center" h="100vh" direction="column">
-        <Text color="red.500" fontSize="lg">Error loading appointments</Text>
-        <Text color="red.400" fontSize="md">{error?.message || "Please try again later"}</Text>
+        <Icon as={FiCalendar} w={16} h={16} color="gray.300" mb={4} />
+        <Text color="gray.500" fontSize="xl" fontWeight="bold">
+          { "No appointments found"}
+        </Text>
+        <Text color="gray.400" mt={2} mb={4}>
+          You don't have any appointments scheduled at the moment
+        </Text>
         <Button 
-          mt={4} 
           colorScheme="teal" 
-          onClick={() => navigate('/dashboard')}
           leftIcon={<FiArrowLeft />}
+          onClick={() => navigate('/dashboard')}
         >
           Back to Dashboard
         </Button>
