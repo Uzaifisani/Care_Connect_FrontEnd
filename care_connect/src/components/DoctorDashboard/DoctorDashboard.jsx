@@ -151,6 +151,9 @@ const DoctorDashboard = () => {
               </HStack>
             </MenuButton>
             <MenuList>
+              <MenuItem onClick={() => navigate('/dashboard/change-password')}>
+                Change Password
+              </MenuItem>
               <MenuItem icon={<FiLogOut />} onClick={handleLogout}>
                 Logout
               </MenuItem>

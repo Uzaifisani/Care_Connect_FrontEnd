@@ -16,6 +16,11 @@ import MyAppointmentsPage from "../components/PatientDashboard/MyAppoinments";
 import GiveFeedbackPage from "../components/PatientDashboard/GiveFeedback";
 import UploadPrescriptions from "../components/DoctorDashboard/UploadPrescriptions";
 import ViewPrescriptions from "../components/DoctorDashboard/ViewPrescriptions";
+import RegisterPatient from "../components/StaffDashboard/RegisterPatient";
+import ChangePassword from "../components/ChangePassword";
+import MakePayment from "../components/StaffDashboard/MakePayment";
+import AllPatient from "../components/StaffDashboard/AllPatient";
+import ViewPrescription from "../components/PatientDashboard/ViewPrescription";
 
 export default function DashboardRouter() {
   const { userType } = useAuth();
@@ -41,18 +46,21 @@ export default function DashboardRouter() {
   // Handle nested routes based on user type
   return (
     <Routes>
+      {/* Common Routes for all user types */}
+      <Route path="change-password" element={<ChangePassword />} />
+
       {/* Admin Routes */}
       {userType === 'Admin' && (
-  <>
-    <Route path="/" element={<AdminDashboard />} />
-    <Route path="admin/doctors" element={<ListDoctors />} /> 
-    <Route path="admin/staffs" element={<ListAllStaff />} />
-    <Route path="admin/verify-users" element={<VerifyUsers />} />
-    <Route path="admin/feedback" element={<Feedback />} />
-    <Route path="admin/edit-doctor/:id" element={<EditUserPage />} />
-    <Route path="admin/edit-staff/:id" element={<EditUserPage />} />
-  </>
-)}
+        <>
+          <Route path="/" element={<AdminDashboard />} />
+          <Route path="admin/doctors" element={<ListDoctors />} /> 
+          <Route path="admin/staffs" element={<ListAllStaff />} />
+          <Route path="admin/verify-users" element={<VerifyUsers />} />
+          <Route path="admin/feedback" element={<Feedback />} />
+          <Route path="admin/edit-doctor/:id" element={<EditUserPage />} />
+          <Route path="admin/edit-staff/:id" element={<EditUserPage />} />
+        </>
+      )}
       
       {/* Doctor Routes */}
       {userType === 'Doctor' && (
@@ -70,8 +78,9 @@ export default function DashboardRouter() {
         <>
           <Route path="/" element={<PatientDashboard />} />
           <Route path="patient/book-appointment" element={<BookAppointmentPage />} />
-    <Route path="patient/my-appointments" element={<MyAppointmentsPage />} />
-    <Route path="patient/feedback" element={<GiveFeedbackPage />} />
+          <Route path="patient/my-appointments" element={<MyAppointmentsPage />} />
+          <Route path="patient/feedback" element={<GiveFeedbackPage />} />
+          <Route path="patient/prescriptions" element={<ViewPrescription />} />
         </>
       )}
       
@@ -79,7 +88,9 @@ export default function DashboardRouter() {
       {userType === 'Staff' && (
         <>
           <Route path="/" element={<StaffDashboard />} />
-          {/* Add staff specific routes */}
+          <Route path="staff/register-patient" element={<RegisterPatient/>} />
+          <Route path="staff/make-payment" element={<MakePayment />} />
+          <Route path="staff/all-patients" element={<AllPatient />} />
         </>
       )}
       

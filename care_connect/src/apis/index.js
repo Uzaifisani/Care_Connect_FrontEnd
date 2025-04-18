@@ -153,7 +153,7 @@ export const DoctorsFeedback=async(docid)=>{
     const response = await axios.post(
         `${API_URl}/api/doctor/appointments/feedbacks`,
         {
-            docid//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+            docid
         },
         {
             headers: {
@@ -168,7 +168,7 @@ export const DoctorsUploadPresc=async(PrescData)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
         `${API_URl}/api/doctor/prescription/upload`,
-            PrescData,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this,
+            PrescData,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -182,7 +182,7 @@ export const DoctorsViewPresc=async(docid)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
         `${API_URl}/api/doctor/prescriptions`,
-            docid//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+            docid
         ,
         {
             headers: {
@@ -211,7 +211,7 @@ export const BookAppointment=async(FormData)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
         `${API_URl}/api/appointment/book`,
-        FormData,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        FormData,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -225,7 +225,7 @@ export const MyAppointments=async(patid)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
         `${API_URl}/api/patient/appointments`,
-        patid,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        patid,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -239,7 +239,7 @@ export const CancelAppointments=async(aptid)=>{
     const token = localStorage.getItem('accessToken'); 
     const response = await axios.post(
         `${API_URl}/api/appointment/cancel `,
-        aptid,//:"8G6LFJjkEclTHgI4JDZY_" //chnge this
+        aptid,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -263,3 +263,84 @@ export const WriteFeedbacks=async(FormData)=>{
     return response;
 }
 
+export const GetPrescription=async(patid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/patient/prescriptions`,
+        patid,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+// Staff Dashboard
+export const RegisterNewUserFromStaff=async(FormData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/staff/register `,
+        FormData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+
+export const GetAllPatients=async()=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.get(
+        `${API_URl}/api/patients`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+export const PatientwithIncompletePayment=async()=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.get(
+        `${API_URl}/api/staff/pending/payments`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
+export const AcceptPayment=async(FormData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/staff/payment/accept`,
+        FormData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+//common apis
+export const ChangePassword=async(FormData)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/password/reset`,
+        FormData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
