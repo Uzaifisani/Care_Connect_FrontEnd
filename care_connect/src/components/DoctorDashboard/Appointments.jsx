@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Box,
   Flex,
@@ -24,10 +24,11 @@ import {
   TabPanel,
   Icon,
   Center,
-  Select
+  Select,
+  useToast
 } from '@chakra-ui/react';
 import { FiCalendar, FiClock, FiDollarSign, FiUser, FiArrowLeft } from 'react-icons/fi';
-import { AppointmentsAPI } from '../../apis';
+import { AppointmentsAPI, markAsComplete } from '../../apis';
 import { useNavigate } from 'react-router-dom';
 import useUserStore from '../../store/userStore';
 
@@ -35,6 +36,8 @@ const Appointments = () => {
   const [filter, setFilter] = useState('all');
   const navigate = useNavigate();
   const user = useUserStore(state => state.user);
+  const toast = useToast();
+  const queryClient = useQueryClient();
   
   const {
     data: appointments,
@@ -53,6 +56,44 @@ const Appointments = () => {
     },
     enabled: !!user?.uid
   });
+
+  const markCompleteMutation = useMutation({
+    mutationFn: (aptid) => markAsComplete({ aptid }),
+    onSuccess: (response) => {
+      if (response.data.error === false) {
+        toast({
+          title: "Success",
+          description: "Appointment marked as complete",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
+        // Refetch appointments to update the list
+        queryClient.invalidateQueries(['doctorAppointments', user?.uid]);
+      } else {
+        toast({
+          title: "Error",
+          description: response.data.msg || "Failed to mark appointment as complete",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
+      }
+    },
+    onError: (error) => {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to mark appointment as complete",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+    }
+  });
+
+  const handleMarkComplete = (aptid) => {
+    markCompleteMutation.mutate(aptid);
+  };
 
   const bgColor = useColorModeValue('white', 'gray.800');
   const cardBgColor = useColorModeValue('white', 'gray.700');
@@ -246,6 +287,8 @@ const Appointments = () => {
                     colorScheme="teal" 
                     size="sm"
                     width="full"
+                    onClick={() => handleMarkComplete(appointment._id)}
+                    isLoading={markCompleteMutation.isLoading}
                   >
                     Mark Complete
                   </Button>

@@ -40,7 +40,7 @@ const RegisterPatient = () => {
           duration: 5000,
           isClosable: true,
         });
-        navigate('/staff-dashboard');
+        navigate('/');
       } else {
         toast({
           title: "Registration Failed",

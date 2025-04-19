@@ -14,12 +14,12 @@ const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
   department: yup.string().when("userType", {
-    is: "doctor",
-    then: (schema) => schema.required("Department is required for doctors"),
+    is: "Doctor",
+    then: (schema) => schema.required("Department is required for Doctors"),
   }),
   speciality: yup.string().when("userType", {
-    is: "doctor",
-    then: (schema) => schema.required("Speciality is required for doctors"),
+    is: "Doctor",
+    then: (schema) => schema.required("Speciality is required for Doctors"),
   }),
 });
 
@@ -132,7 +132,7 @@ export default function SignupPage() {
               <FormErrorMessage>{errors.password?.message}</FormErrorMessage>
             </FormControl>
 
-            {userType === "doctor" && (
+            {userType === "Doctor" && (
               <>
                 <FormControl isInvalid={errors.department}>
                   <Input 

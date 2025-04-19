@@ -276,6 +276,21 @@ export const GetPrescription=async(patid)=>{
     );
     return response;
 }
+
+export const markAsComplete=async(aptid)=>{
+    const token = localStorage.getItem('accessToken'); 
+    const response = await axios.post(
+        `${API_URl}/api/appointment/complete`,
+        aptid,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+    );
+    return response;
+}
+
 // Staff Dashboard
 export const RegisterNewUserFromStaff=async(FormData)=>{
     const token = localStorage.getItem('accessToken'); 
