@@ -60,7 +60,7 @@ const Appointments = () => {
   const markCompleteMutation = useMutation({
     mutationFn: (aptid) => markAsComplete({ aptid }),
     onSuccess: (response) => {
-      if (response.data.error === false) {
+      if (response.data.msg === "Appointment marked as completed") {
         toast({
           title: "Success",
           description: "Appointment marked as complete",
@@ -287,7 +287,7 @@ const Appointments = () => {
                     colorScheme="teal" 
                     size="sm"
                     width="full"
-                    onClick={() => handleMarkComplete(appointment._id)}
+                    onClick={() => handleMarkComplete(appointment.aptid)}
                     isLoading={markCompleteMutation.isLoading}
                   >
                     Mark Complete

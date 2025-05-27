@@ -105,8 +105,8 @@ const Feedback = () => {
     return (
       <Flex justify="center" align="center" h="100vh" direction="column">
         <Icon as={FiMessageCircle} w={16} h={16} color="red.500" mb={4} />
-        <Text color="red.500" fontSize="lg">Error loading feedbacks</Text>
-        <Text color="red.400" fontSize="md">{error?.message || "Please try again later"}</Text>
+        <Text color="red.500" fontSize="lg">No Feedback Found</Text>
+        <Text color="red.400" fontSize="md">{"Please try again later"}</Text>
         <Button 
           mt={4} 
           colorScheme="red" 
